@@ -1,0 +1,17 @@
+{
+  "name": "electron2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "electron": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^2.0.7",
+    "npm": "^6.4.0",
+    "to": "^0.2.9",
+    "update": "^0.7.4"
+  }
+}
