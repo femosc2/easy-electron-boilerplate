@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css?family=Pavanam|Yellowtail');
+body {
+background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: cover;
+    background-image: url("http://felixmorau.se/images/backgroundBlur.jpg");
+}
+
+#mainH1, #mainText, #contactMeText {
+    text-align: center;
+    font-family: "Pavanam", sans-serif;
+    display: block;
+    margin: 0 auto;
+    width: 70%;
+    color: #fff;
+    letter-spacing: 5px;
+}
+
+#mainText, #contactMeText {
+    text-align: left;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+#contactMeText {
+    text-align: center;
+}
+
+#contactMeText a, #contactMeText a:visited {
+    text-align: center;
+    color: inherit;
+    text-decoration: none;
+}
+
+#contactMeText i:hover {
+    color: rgba(255, 0, 203, 1);
+    transition: 1s;
+}
+
+main {
+    width: 100%;
+    padding: 0px;
+    margin: 0 auto;
+    margin-top: 25%;
+    margin-bottom: 25%;
+}
+
+.divider {
+    width: 100%;
+    height: 5px;
+    background-color: gradient;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ea32ff+0,7072d1+70,7072d1+70 */
+    background: linear-gradient(to right, #ea32ff 0%,#7072d1 70%,#7072d1 70%);
+    margin: 0 auto;
+    width: 70%;
+    border-radius: 50px;
+}
+
+#logo {
+    display: block;
+    margin: 0 auto;
+    width: 50px;
+    height: 50px;
+}
+
+.icon {
+    font-size: 50px;
+}
