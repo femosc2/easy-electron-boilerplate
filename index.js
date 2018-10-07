@@ -1,74 +1,80 @@
 const electron = require("electron");
 
-const { webFrame } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, Tray } = electron;
 
-const { app, BrowserWindow, Menu, ipcMain } = electron;
+const path = require("path");
 
 let mainWindow;
 let addWindow;
+let helpWindow;
 
 app.on("ready", () => {
+    // Starts the app, make sure to change the .loadURL to your own filepath
     mainWindow = new BrowserWindow({width: 800, height: 600});
-    mainWindow.loadURL(`file://${__dirname}/main.html`);
+    mainWindow.loadURL(`file://${__dirname}/main.html`); // CHANGE HERE
     mainWindow.on("closed", () => app.quit());
 
-    const mainMenu = Menu.buildFromTemplate(menuTemplate);
-    Menu.setApplicationMenu(mainMenu);
+    const trayName = process.platform === "win32" ? "windowstest.png" : "test.png"; // creates a tray icon depending on what platform you are on.
+    const trayPath = path.join(__dirname, `./src/assets/${trayName}`);              // Change the Icons in the src/assets/folder
+    new Tray(trayPath);
+
+    const mainMenu = Menu.buildFromTemplate(menuTemplate); // Builds a new menu
+    Menu.setApplicationMenu(mainMenu); // Sets the applications menu from the standard chrome one to the customized one.
 });
 
-function createAddWindow() {
+function createAddWindow(width, height) {
+    // Creates a new window, use the width and height as parameters
     addWindow = new BrowserWindow({
-        width: 300,
-        height: 200,
+        width: width,
+        height: height,
         title: "Test Window"
     });
     addWindow.loadURL(`file://${__dirname}/testWindow.html`);
     addWindow.on("closed", () => addWindow = null);
+    lastFocusedWindow = BrowserWindow.getFocusedWindow().id;
 }
 
 function createHelpWindow() {
-    addWindow = new BrowserWindow({
+    // Creates a new window with the ReadMe
+    helpWindow = new BrowserWindow({
         width: 1680,
         height: 1050,
         title: "Test Window"
     });
-    addWindow.loadURL(`https://github.com/femosc2/easy-electron-boilerplate`);
-    addWindow.on("closed", () => addWindow = null);
+    helpWindow.loadURL(`https://github.com/femosc2/easy-electron-boilerplate`);
+    helpWindow.on("closed", () => helpWindow = null);
+    lastFocusedWindow = BrowserWindow.getFocusedWindow().id;
 }
 
 function reloadWindow() {
     // Reloads the window
-    mainWindow.reload();
-}
-
-function zoomIn() {
-    // Not Working Yet
-    webFrame.setZoomFactor(2);
-}
-
-function zoomOut() {
-    // Not Working Yet
-    webFrame.setZoomFactor(-2);
+    BrowserWindow.getFocusedWindow().reload();
 }
 
 function fullScreen() {
     // Sets fullscreen, toggleable
-    let isFullScreen = false;
-    if (isFullScreen === false) {
+    try {
+    if (BrowserWindow.getFocusedWindow().isFullScreen() === false) {
+        BrowserWindow.getFocusedWindow().setFullScreen(true);
+    } else if (BrowserWindow.getFocusedWindow().isFullScreen() === true) {
+        BrowserWindow.getFocusedWindow().setFullScreen(false); // This is required for the setSize function to work
+        BrowserWindow.getFocusedWindow().setSize(800, 600, true);
+    }
+    } catch(err) {
+        mainWindow.restore();
         mainWindow.setFullScreen(true);
-        isFullScreen = true;
-    } if (isFullScreen === true) {
-        mainWindow.setFullScreen(false); // This is required for the setSize function to work
-        mainWindow.setSize(800, 600, true);
-        isFullScreen = false;
     }
 }
 
 function minimize() {
     // Minimizes the window
-    mainWindow.setFullScreen(false); // This is required in order for the window to minimize if it is in fullscreen
-    mainWindow.minimize();
-}
+    try {
+        BrowserWindow.getFocusedWindow().setFullScreen(false); // This is required in order for the window to minimize if it is in fullscreen
+        BrowserWindow.getFocusedWindow().minimize();
+    }catch (err) {
+        mainWindow.restore();
+    }
+}   
 
 function mute() {
     // mutes the playing audio, toggleable
@@ -91,7 +97,7 @@ const menuTemplate = [
             // Creates a new Test Window
             { label: "New Test Window",
             accelerator: process.platform === "darwin" ? "Command+N" : "Ctrl+N",
-            click() { createAddWindow(); }
+            click() { createAddWindow(300, 300); }
             },
             {
             // Quits the app and closes the window
@@ -142,18 +148,8 @@ const menuTemplate = [
             accelerator: process.platform === "darwin" ? "Command+R" : "Ctrl+R",
             click() { reloadWindow(); }
             },
-            // NOT IMPLEMENTED YET, Zooms in the window
-            { label: "Zoom In",
-            accelerator: process.platform === "darwin" ? "Command++" : "Ctrl++",
-            click() { console.log("Should zoom in the page"); }
-            },
-            // NOT IMPLEMENTED YET, Zooms out the window
-            { label: "Zoom Out",
-            accelerator: process.platform === "darwin" ? "Command+-" : "Ctrl+-",
-            click() { console.log("Should zoom out the page"); }
-            },
-            // Enters Fullscreen
-            { label: "Fullscreen",
+            // Toggles Fullscreen
+            { label: "Toggle Fullscreen",
             accelerator: process.platform === "darwin" ? "Command+F" : "Ctrl+F",
             click() { fullScreen(); }
             },
@@ -163,13 +159,13 @@ const menuTemplate = [
     {
         label: "Window",
         submenu: [
-            // Minimizes the window
-            { label: "Minimize",
+            // Toggles Minimization
+            { label: "Toggle Minimize",
             accelerator: process.platform === "darwin" ? "Command+M" : "Ctrl+M",
             click() { minimize(); }
             },
             // Mutes the audio playing elements
-            { label: "Mute",
+            { label: "Toggle Mute",
             accelerator: process.platform === "darwin" ? "Shift+Command+M" : "Shift+Ctrl+M",
             click() { mute(); }
             },
