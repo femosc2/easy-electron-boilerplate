@@ -93,18 +93,18 @@ function mute() {
 
 const menuTemplate = [
     {
-        label: "File",
-        submenu: [
+        label: "File", //Name of the category
+        submenu: [ // Creates a menu under the category
             // Creates a new Test Window
-            { label: "New Test Window",
-            accelerator: process.platform === "darwin" ? "Command+N" : "Ctrl+N",
-            click() { createAddWindow(300, 300); }
+            { label: "New Test Window", //Name of the listitem in the list 
+            accelerator: process.platform === "darwin" ? "Command+N" : "Ctrl+N", //Shortcut keys to access the label
+            click() { createAddWindow(300, 300); } // runs a function
             },
             {
             // Quits the app and closes the window
             label: "Quit",
             accelerator: process.platform === "darwin" ? "Command+Q" : "Ctrl+Q",
-            click() { app.quit(); }
+            click() { app.quit(); } //quits the apps
             },
         ]
     },
