@@ -34,16 +34,15 @@ function createAddWindow(width, height) {
     lastFocusedWindow = BrowserWindow.getFocusedWindow().id;
 }
 
-function createHelpWindow() {
-    // Creates a new window with the ReadMe
+function createHelpWindow(width, height) {
+    // Creates a new window with the readMe on the repo open, use the width and height to determine the size of the window
     helpWindow = new BrowserWindow({
-        width: 1680,
-        height: 1050,
+        width: width,
+        height: height,
         title: "Test Window"
     });
     helpWindow.loadURL(`https://github.com/femosc2/easy-electron-boilerplate`);
     helpWindow.on("closed", () => helpWindow = null);
-    lastFocusedWindow = BrowserWindow.getFocusedWindow().id;
 }
 
 function reloadWindow() {
@@ -82,9 +81,11 @@ function mute() {
     // var vid = document.getElementById("ELEMENT GOES HERE ");
     if (isMute === false) {
         // vid.muted = true;
+        console.log("Mute");
         isMute = true;
-    } else if (isMute === True) {
+    } else if (isMute === true) {
         // vid.muted = false;
+        console.log("Unmuted");
         isMute = false;
     }
 }
@@ -110,11 +111,13 @@ const menuTemplate = [
     {
         label: "Edit",
         submenu: [
-            { label: "Undo",
+            {
+            label: "Undo",
             accelerator: process.platform === "darwin" ? "Command+Z" : "Ctrl+Z",
             selector: "undo:"
             },
-            { label: "Redo",
+            { 
+            label: "Redo",
             accelerator: process.platform === "darwin" ? "Shift+Command+Z" : "Shift+Ctrl+Z",
             selector: "redo:"
             },
@@ -177,7 +180,7 @@ const menuTemplate = [
             // Directs you to the readMe
             { label: "ReadMe",
             accelerator: process.platform === "darwin" ? "Command+H" : "Ctrl+H",
-            click() { createHelpWindow(); }
+            click() { createHelpWindow(1920, 1080); }
             },
         ]
     },

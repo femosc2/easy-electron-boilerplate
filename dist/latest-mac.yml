@@ -1,0 +1,10 @@
+version: 1.0.0
+files:
+  - url: easy-electron-boilerplate-1.0.0-mac.zip
+    sha512: xPTIIEMQzw0LOEDOZJPSZubUz3rfTJoS1FQsUfe2XB4tEcweqfN0ktGhsZGqxuuar2tc4ki3bRP0rccYsROe8g==
+  - url: easy-electron-boilerplate-1.0.0.dmg
+    sha512: qsgx2ROzp4FlvaTeG15/dIuJnYEpBxzybwy6FceF+hdxonhvPT+0nhiKkJB6ACk1uL3dlFENN6vbj5Qm324t3A==
+    size: 54772985
+path: easy-electron-boilerplate-1.0.0-mac.zip
+sha512: xPTIIEMQzw0LOEDOZJPSZubUz3rfTJoS1FQsUfe2XB4tEcweqfN0ktGhsZGqxuuar2tc4ki3bRP0rccYsROe8g==
+releaseDate: '2018-10-08T11:39:12.112Z'

@@ -1,6 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Pavanam|Yellowtail');
+
+* {
+    animation: fadeIn 1s 1;
+    animation-fill-mode: forwards;
+}
+
 body {
-background-attachment: fixed;
+    background-color: #000;
+    background-attachment: fixed;
     background-repeat: no-repeat;
     background-position: top;
     background-size: cover;
@@ -66,4 +73,13 @@ main {
 
 .icon {
     font-size: 50px;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
